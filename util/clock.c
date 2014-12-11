@@ -125,6 +125,19 @@ clock_time_t clock_time_micros()
 	return ((m << 8) + t) * (64 / clockCyclesPerMicrosecond());
 }
 
+void delay_millis(clock_time_t millis)
+{
+	clock_time_t future = clock_time() + millis;
+
+	while(true)
+	{
+		if(clock_time() > future)
+		{
+			break;
+		}
+	}
+}
+
 ISR(TIMER0_OVF_vect)
 {
 	// copy these to local variables so they can be stored in registers
